@@ -39,9 +39,6 @@ class SearchEngine:
             clean_tokens = self.tokenizer.remove_stopwords(tokens)
             candidates = self.candidate_model.search([clean_tokens])
             candidates = candidates.reshape(-1).tolist()
-            # print(f"Candidates:")
-            # for c in candidates:
-            #     print(self.doc_ids[c], '\t', self.doc_texts[c])
             tokens_ids = self.tokenizer.token_to_ids(tokens)
             docs_with_scores = [{'query': query,
                                  'doc_id': self.doc_ids[candidate_idx],

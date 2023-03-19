@@ -1,12 +1,8 @@
 import faiss
 import numpy as np
-import time
 import typing as t
 
-# OPQM_D,...,PQMx4fsr
-# OPQ5,IVF100,PQ20
-# IVF100,PQ10
-# OPQ5,IVF800,PQ5
+
 class CandidateModel:
     def __init__(self,
                  glove_embeddings_path,
@@ -44,21 +40,16 @@ class CandidateModel:
         return token_repr
 
     def update_index(self, tokenized_documents_list: t.List[t.List[str]]):
-        # start = time.time()
         documents_repr = np.vstack([self.make_text_repr(d) for d in tokenized_documents_list])
         index = faiss.index_factory(documents_repr.shape[1], self.index_config)
         index.train(documents_repr)
         index.add(documents_repr)
         index.nprobe = self.n_probe
-        # print(f"Candidate model index updated in {time.time() -start:.2f}s")
         self.index = index
         return self.index.ntotal
 
     def search(self, tokenized_queries_list: t.List[t.List[str]]) -> np.ndarray:
-        # start = time.time()
         assert self.index is not None, 'Candidate model index is not initialized'
         queries_repr = np.vstack([self.make_text_repr(d) for d in tokenized_queries_list])
         documents, indexes = self.index.search(queries_repr, self.top_n)
-        # print(f"Candidate model search of {len(tokenized_queries_list)} "
-        #             f"documents perfromed in {time.time() -start:.2f}s")
         return indexes

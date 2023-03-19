@@ -2,8 +2,7 @@ import json
 import traceback
 from flask import Flask, jsonify, request
 from search_engine import SearchEngine
-# from guppy import hpy
-# import gc
+
 
 def return_exception(func):
     def wrapper():
@@ -19,7 +18,6 @@ def return_exception(func):
 
 
 def create_app():
-    # run flask service
     app = Flask(__name__)
     search_engine = SearchEngine()
 
@@ -32,7 +30,6 @@ def create_app():
     def query():
         queries = json.loads(request.json)['queries']
         result = search_engine.query(queries)
-        # print(hpy().heap())
         return jsonify(result)
 
     @app.route('/update_index', methods=['POST'])
@@ -40,8 +37,6 @@ def create_app():
     def update_index():
         documents = json.loads(request.json)['documents']
         index_size = search_engine.update_index(documents)
-        # gc.collect()
-        # print(hpy().heap())
         return {'status': 'ok', 'index_size': index_size}
 
     @app.route('/score', methods=['POST'])
@@ -51,8 +46,6 @@ def create_app():
         doc = request_dict['doc']
         query = request_dict['query']
         score = search_engine.score(doc, query)
-        # gc.collect()
-        # print(hpy().heap())
         return {'score': score}
 
     return app
