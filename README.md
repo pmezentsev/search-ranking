@@ -74,7 +74,7 @@ The response is a JSON object containing the search results for each query.
 
 Example response:
 
-```json
+```
 {
     "query1": [results for query1],
     "query2": [results for query2]
