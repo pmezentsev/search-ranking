@@ -46,7 +46,7 @@ Implementation details could be found here: [candidate_model.py](serving/src/can
 ### Service API:
 Below is the API description for the provided Flask application:
 
-```json
+```
 /ping (GET)
 ```
 
