@@ -81,7 +81,7 @@ Example response:
 }
 ```
 -----
-```json
+```
 /update_index (POST)
 ```
 
@@ -89,7 +89,7 @@ This endpoint is used to update the search engine's index with new documents. Th
 
 Example request body:
 
-```json
+```
 {
     "documents": ["doc1", "doc2", "doc3"]
 }
@@ -98,14 +98,14 @@ The response is a JSON object containing a status key and the current index size
 
 Example response:
 
-```json
+```
 {
     "status": "ok",
     "index_size": updated_index_size
 }
 ```
 -----
-```json
+```
 /score (POST)
 ```
 
@@ -123,7 +123,7 @@ The response is a JSON object containing the relevance score between the documen
 
 Example response:
 
-```json
+```
 {
     "score": calculated_score
 }
